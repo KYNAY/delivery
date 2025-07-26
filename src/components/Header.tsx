@@ -11,8 +11,6 @@ interface HeaderProps {
   onCartClick?: () => void;
 }
 
-const API_BASE_URL = 'http://localhost:3001';
-
 export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBackButton, onBack, onCartClick }) => {
   const { getTotalItems } = useCart();
   const { storeSettings } = useData();
@@ -34,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBackButton,
             <div className="flex items-center space-x-3">
               {storeSettings?.logo_url && (
                  <img
-                  src={`${API_BASE_URL}${storeSettings.logo_url}`}
+                  src={storeSettings.logo_url}
                   alt={storeSettings.store_name}
                   className="w-8 h-8 rounded-full object-cover"
                 />

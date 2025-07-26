@@ -6,8 +6,6 @@ interface CategoryGridProps {
   categories: Category[];
 }
 
-const API_BASE_URL = 'http://localhost:3001';
-
 export const CategoryGrid: React.FC<CategoryGridProps> = ({ categories }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
@@ -18,7 +16,7 @@ export const CategoryGrid: React.FC<CategoryGridProps> = ({ categories }) => {
           className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200 flex flex-col items-center space-y-2"
         >
           {category.image_url ? (
-            <img src={`${API_BASE_URL}${category.image_url}`} alt={category.name} className="w-16 h-16 object-cover rounded-full" />
+            <img src={category.image_url} alt={category.name} className="w-16 h-16 object-cover rounded-full" />
           ) : (
             <div className="text-3xl">{category.icon}</div>
           )}

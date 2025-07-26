@@ -7,8 +7,6 @@ interface ProductGridProps {
   onProductSelect: (product: Product) => void;
 }
 
-const API_BASE_URL = 'http://localhost:3001';
-
 export const ProductGrid: React.FC<ProductGridProps> = ({ products, onProductSelect }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
@@ -21,7 +19,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products, onProductSel
         >
           <div className="relative">
             <img
-              src={`${API_BASE_URL}${product.image_url}`}
+              src={product.image_url}
               alt={product.name}
               className={`w-full h-48 object-cover ${!product.is_available ? 'grayscale' : ''}`}
             />
