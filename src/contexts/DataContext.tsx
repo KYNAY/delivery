@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode, useEffect } from
 import { Category, Brand, Product, Order, StoreSettings } from '../types';
 import axios from 'axios'; // Usaremos axios para as requisições HTTP
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 interface DataContextType {
   categories: Category[];
