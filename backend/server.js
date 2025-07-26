@@ -11,7 +11,13 @@ const fs = require('fs');
 const app = express();
 const port = 3001;
 
-app.use(cors());
+// Configuração explícita do CORS
+const corsOptions = {
+  origin: 'https://distribuidora-republica.netlify.app',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Servir arquivos estáticos da pasta 'public'
