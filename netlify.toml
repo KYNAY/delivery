@@ -1,0 +1,7 @@
+# Regra de reescrita para Single-Page Applications (SPA)
+# Isso garante que todas as rotas sejam direcionadas para o index.html
+# para que o React Router possa gerenciá-las.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
