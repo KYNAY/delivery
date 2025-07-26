@@ -3,7 +3,7 @@ import { Plus, Edit2, Trash2 } from 'lucide-react';
 import axios from 'axios';
 import { User } from '../../types';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 export const UserManagement: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

@@ -3,8 +3,8 @@ import { useData } from '../../contexts/DataContext';
 import { Save, X } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001';
-const API_URL = `${API_BASE_URL}/api`;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = API_URL.replace('/api', '');
 
 export const Settings: React.FC = () => {
   const { storeSettings, updateStoreSettings } = useData();
