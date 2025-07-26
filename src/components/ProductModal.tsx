@@ -11,8 +11,6 @@ interface ProductModalProps {
   onFinishOrder: () => void;
 }
 
-const API_BASE_URL = 'http://localhost:3001';
-
 export const ProductModal: React.FC<ProductModalProps> = ({
   product,
   isOpen,
@@ -73,7 +71,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
             
             <div className="mb-4">
               <img
-                src={`${API_BASE_URL}${product.image_url}`}
+                src={product.image_url}
                 alt={product.name}
                 className="w-full h-64 object-cover rounded-lg"
               />

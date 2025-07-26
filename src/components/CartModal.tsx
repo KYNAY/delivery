@@ -9,8 +9,6 @@ interface CartModalProps {
   onFinishOrder: () => void;
 }
 
-const API_BASE_URL = 'http://localhost:3001';
-
 export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, onFinishOrder }) => {
   const { cart, removeFromCart, getTotalPrice } = useCart();
 
@@ -48,7 +46,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, onFinishO
                   <div key={index} className="flex items-center justify-between border-b pb-2">
                     <div className="flex items-center">
                       <img
-                        src={`${API_BASE_URL}${item.product.image_url}`}
+                        src={item.product.image_url}
                         alt={item.product.name}
                         className="w-16 h-16 object-cover rounded-md mr-4"
                       />
