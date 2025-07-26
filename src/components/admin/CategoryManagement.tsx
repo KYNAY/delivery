@@ -4,8 +4,8 @@ import { Category } from '../../types';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001';
-const API_URL = `${API_BASE_URL}/api`;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = API_URL.replace('/api', '');
 
 export const CategoryManagement: React.FC = () => {
   const { categories, addCategory, updateCategory, deleteCategory } = useData();
