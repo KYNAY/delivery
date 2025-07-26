@@ -2,10 +2,10 @@
 import React from 'react';
 import { useData } from '../../contexts/DataContext';
 import { Order } from '../../types';
-import { Package, CheckCircle, XCircle } from 'lucide-react';
+import { Package, CheckCircle, XCircle, Trash2 } from 'lucide-react';
 
 export const OrderManagement: React.FC = () => {
-  const { orders, updateOrderStatus, loading } = useData();
+  const { orders, updateOrderStatus, deleteOrder, loading } = useData();
 
   if (loading) {
     return <div>Carregando pedidos...</div>;
@@ -14,6 +14,12 @@ export const OrderManagement: React.FC = () => {
   const handleStatusChange = (orderId: string, newStatus: Order['status']) => {
     if (window.confirm(`Tem certeza que deseja mudar o status do pedido ${orderId} para ${newStatus}?`)) {
       updateOrderStatus(orderId, newStatus);
+    }
+  };
+
+  const handleDelete = (orderId: string) => {
+    if (window.confirm(`ATENÇÃO: Esta ação é irreversível. Tem certeza que deseja DELETAR PERMANENTEMENTE o pedido ${orderId}?`)) {
+      deleteOrder(orderId);
     }
   };
 
@@ -85,6 +91,13 @@ export const OrderManagement: React.FC = () => {
                         <XCircle className="w-4 h-4" />
                       </button>
                     )}
+                     <button
+                        onClick={() => handleDelete(order.id)}
+                        className="text-gray-500 hover:text-red-900 ml-2"
+                        title="Deletar Pedido Permanentemente"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                   </td>
                 </tr>
               ))

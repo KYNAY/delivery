@@ -453,6 +453,31 @@ app.put('/api/orders/:id/status', async (req, res) => {
   }
 });
 
+app.delete('/api/orders/:id', async (req, res) => {
+  const { id } = req.params;
+  const connection = await db.getConnection();
+  try {
+    await connection.beginTransaction();
+    // Deleta primeiro os itens do pedido para evitar problemas de chave estrangeira
+    await connection.query('DELETE FROM order_items WHERE order_id = ?', [id]);
+    // Depois deleta o pedido principal
+    const [result] = await connection.query('DELETE FROM orders WHERE id = ?', [id]);
+    
+    if (result.affectedRows === 0) {
+      throw new Error('Pedido não encontrado.');
+    }
+
+    await connection.commit();
+    res.status(204).send(); // 204 No Content é a resposta padrão para um delete bem-sucedido
+  } catch (err) {
+    await connection.rollback();
+    console.error('Erro ao deletar pedido:', err);
+    res.status(500).send('Erro ao deletar pedido.');
+  } finally {
+    connection.release();
+  }
+});
+
 app.listen(port, () => {
   console.log(`Servidor backend rodando em http://localhost:${port}`);
 });

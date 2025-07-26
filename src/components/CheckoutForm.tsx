@@ -77,7 +77,8 @@ export const CheckoutForm: React.FC<CheckoutFormProps> = ({ isOpen, onClose, onS
       
       const whatsappUrl = `https://wa.me/${storeSettings.whatsapp_number}?text=${encodeURIComponent(message)}`;
       
-      window.open(whatsappUrl, '_blank');
+      // Redireciona a página atual para o WhatsApp. É mais confiável que o window.open.
+      window.location.href = whatsappUrl;
       
       clearCart();
       onSuccess();

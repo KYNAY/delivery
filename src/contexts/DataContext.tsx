@@ -26,6 +26,7 @@ interface DataContextType {
   // Orders
   addOrder: (order: Omit<Order, 'id' | 'created_at'>) => void;
   updateOrderStatus: (id: string, status: Order['status']) => void;
+  deleteOrder: (id: string) => void;
   // Settings
   updateStoreSettings: (settings: Partial<StoreSettings>) => void;
 }
@@ -183,6 +184,15 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
+  const deleteOrder = async (id: string) => {
+    try {
+      await axios.delete(`${API_URL}/orders/${id}`);
+      fetchData(); // Re-fetch data
+    } catch (error) {
+      console.error('Erro ao deletar pedido:', error);
+    }
+  };
+
   // Settings
   const updateStoreSettings = async (settings: Partial<StoreSettings>) => {
     try {
@@ -212,6 +222,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       deleteProduct,
       addOrder,
       updateOrderStatus,
+      deleteOrder,
       updateStoreSettings
     }}>
       {children}
