@@ -172,7 +172,7 @@ export const BrandManagement: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     {brand.image_url ? (
-                      <img src={`${API_BASE_URL}${brand.image_url}`} alt={brand.name} className="w-10 h-10 rounded-full object-cover mr-3" />
+                      <img src={brand.image_url} alt={brand.name} className="w-10 h-10 rounded-full object-cover mr-3" />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-gray-200 mr-3" /> // Placeholder
                     )}

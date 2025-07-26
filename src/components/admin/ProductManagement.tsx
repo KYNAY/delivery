@@ -177,7 +177,7 @@ export const ProductManagement: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       {product.image_url ? (
-                        <img src={`${API_BASE_URL}${product.image_url}`} alt={product.name} className="w-10 h-10 rounded-lg object-cover mr-4" />
+                        <img src={product.image_url} alt={product.name} className="w-10 h-10 rounded-lg object-cover mr-4" />
                       ) : (
                         <Package className="w-10 h-10 text-gray-400 mr-4" />
                       )}

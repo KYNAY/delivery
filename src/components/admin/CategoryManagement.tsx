@@ -173,7 +173,7 @@ export const CategoryManagement: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">
                     {category.image_url ? (
-                      <img src={`${API_BASE_URL}${category.image_url}`} alt={category.name} className="w-10 h-10 rounded-full object-cover mr-3" />
+                      <img src={category.image_url} alt={category.name} className="w-10 h-10 rounded-full object-cover mr-3" />
                     ) : (
                       <span className="text-2xl mr-3">{category.icon}</span>
                     )}
