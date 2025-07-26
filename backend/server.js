@@ -1,10 +1,8 @@
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const path = require('path');
+require('dotenv').config();
+
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors');
-const bcrypt = require('bcryptjs');
-const multer = require('multer');
-const path = require('path');
 const fs = require('fs');
 
 const app = express();
