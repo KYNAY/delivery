@@ -3,6 +3,8 @@ import { Category, Brand, Product, Order, StoreSettings } from '../types';
 import axios from 'axios'; // Usaremos axios para as requisições HTTP
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// Remove '/api' para obter a URL base para as imagens
+const BASE_URL = API_URL.replace('/api', ''); 
 
 interface DataContextType {
   categories: Category[];
@@ -58,14 +60,27 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         axios.get(`${API_URL}/settings`),
         axios.get(`${API_URL}/orders`)
       ]);
-      setCategories(categoriesRes.data);
-      setBrands(brandsRes.data);
-      const productsData = productsRes.data.map((p: Product) => ({
+
+      // Função para adicionar a URL base às imagens
+      const addBaseUrlToImage = (item: any) => ({
+        ...item,
+        image_url: item.image_url ? `${BASE_URL}${item.image_url}` : item.image_url
+      });
+
+      setCategories(categoriesRes.data.map(addBaseUrlToImage));
+      setBrands(brandsRes.data.map(addBaseUrlToImage));
+      const productsData = productsRes.data.map(addBaseUrlToImage).map((p: Product) => ({
         ...p,
         price: parseFloat(p.price as any),
       }));
       setProducts(productsData);
-      setStoreSettings(settingsRes.data);
+      
+      // Adiciona a URL base para a logo nas configurações
+      const settingsData = settingsRes.data;
+      if (settingsData.logo_url) {
+        settingsData.logo_url = `${BASE_URL}${settingsData.logo_url}`;
+      }
+      setStoreSettings(settingsData);
       setOrders(ordersRes.data);
     } catch (error) {
       console.error("Erro ao buscar dados da API:", error);
