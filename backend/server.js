@@ -44,7 +44,7 @@ const dbConfig = USE_ONLINE_DB ? onlineDbConfig : localDbConfig;
 
 console.log(`Conectando ao banco de dados: ${USE_ONLINE_DB ? 'ONLINE' : 'LOCAL'}`);
 
-const db = mysql.createConnection(dbConfig).promise();
+const db = mysql.createPool(dbConfig).promise();
 
 // --- CONFIGURAÇÃO DE UPLOAD (CLOUDINARY) ---
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
