@@ -24,9 +24,9 @@ interface DataContextType {
   updateProduct: (id: string, product: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   // Orders
-  addOrder: (order: Omit<Order, 'id' | 'created_at'>) => void;
-  updateOrderStatus: (id: string, status: Order['status']) => void;
-  deleteOrder: (id: string) => void;
+  addOrder: (order: Omit<Order, 'id' | 'created_at'>) => Promise<number>;
+  updateOrderStatus: (id: number, status: Order['status']) => void;
+  deleteOrder: (id: number) => void;
   // Settings
   updateStoreSettings: (settings: Partial<StoreSettings>) => void;
 }
@@ -184,7 +184,7 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   };
 
-  const deleteOrder = async (id: string) => {
+  const deleteOrder = async (id: number) => {
     try {
       await axios.delete(`${API_URL}/orders/${id}`);
       fetchData(); // Re-fetch data

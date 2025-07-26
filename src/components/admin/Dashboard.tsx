@@ -16,10 +16,12 @@ export const Dashboard: React.FC = () => {
   const lowStockProducts = products.filter(p => p.stock_quantity <= 10 && p.stock_quantity > 0);
   const outOfStockProducts = products.filter(p => p.stock_quantity === 0);
   const totalOrders = orders.length;
-  const totalRevenue = orders.reduce((sum, order) => {
-    const amount = parseFloat(order.total_amount as any);
-    return sum + (isNaN(amount) ? 0 : amount);
-  }, 0);
+  const totalRevenue = orders
+    .filter(order => order.status === 'completed') // Filtra apenas pedidos concluídos
+    .reduce((sum, order) => {
+      const amount = parseFloat(order.total_amount as any);
+      return sum + (isNaN(amount) ? 0 : amount);
+    }, 0);
   const uniqueCustomers = new Set(orders.map(o => o.customer_email)).size;
 
   const topProducts = products

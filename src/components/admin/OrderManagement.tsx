@@ -11,13 +11,13 @@ export const OrderManagement: React.FC = () => {
     return <div>Carregando pedidos...</div>;
   }
 
-  const handleStatusChange = (orderId: string, newStatus: Order['status']) => {
+  const handleStatusChange = (orderId: number, newStatus: Order['status']) => {
     if (window.confirm(`Tem certeza que deseja mudar o status do pedido ${orderId} para ${newStatus}?`)) {
       updateOrderStatus(orderId, newStatus);
     }
   };
 
-  const handleDelete = (orderId: string) => {
+  const handleDelete = (orderId: number) => {
     if (window.confirm(`ATENÇÃO: Esta ação é irreversível. Tem certeza que deseja DELETAR PERMANENTEMENTE o pedido ${orderId}?`)) {
       deleteOrder(orderId);
     }
