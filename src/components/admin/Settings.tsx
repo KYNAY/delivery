@@ -29,8 +29,7 @@ export const Settings: React.FC = () => {
         pix_key: storeSettings.pix_key || '',
       });
       if (storeSettings.logo_url) {
-        // Se a logo_url for um caminho local, monta a URL completa
-        setImagePreview(`${API_BASE_URL}${storeSettings.logo_url}`);
+        setImagePreview(storeSettings.logo_url);
       } else {
         setImagePreview(null);
       }

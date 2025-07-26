@@ -31,7 +31,7 @@ export const CategoryManagement: React.FC = () => {
           image_url: editingCategory.image_url || ''
         });
         if (editingCategory.image_url) {
-          setImagePreview(`${API_BASE_URL}${editingCategory.image_url}`);
+          setImagePreview(editingCategory.image_url);
         } else {
           setImagePreview(null);
         }

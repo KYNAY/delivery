@@ -46,41 +46,30 @@ console.log(`Conectando ao banco de dados: ${USE_ONLINE_DB ? 'ONLINE' : 'LOCAL'}
 
 const db = mysql.createConnection(dbConfig).promise();
 
-// Configuração do Multer para upload de arquivos
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const type = req.body.type; // 'category', 'brand', 'product', 'logo'
-    let uploadPath = 'public/img/';
-    
-    switch (type) {
-      case 'category':
-        uploadPath += 'categories';
-        break;
-      case 'brand':
-        uploadPath += 'brands';
-        break;
-      case 'product':
-        uploadPath += 'products';
-        break;
-      case 'logo':
-        uploadPath += 'logo';
-        break;
-      default:
-        return cb(new Error('Tipo de upload inválido'), '');
-    }
+// --- CONFIGURAÇÃO DE UPLOAD (CLOUDINARY) ---
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-    // Cria a pasta se não existir
-    fs.mkdirSync(uploadPath, { recursive: true });
-    cb(null, uploadPath);
+// Configura o Cloudinary com as variáveis de ambiente
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Configura o armazenamento do Multer para o Cloudinary
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: (req, file) => {
+    // req.body.type vem do frontend (category, brand, product, logo)
+    const folder = `delivery_app/${req.body.type || 'outros'}`;
+    return {
+      folder: folder,
+      allowed_formats: ['jpg', 'png', 'webp', 'jpeg'],
+      // Garante um nome de arquivo único
+      public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
+    };
   },
-  filename: (req, file, cb) => {
-    // Para a logo, queremos um nome de arquivo fixo para que seja sempre substituído.
-    if (req.body.type === 'logo') {
-      cb(null, 'logo' + path.extname(file.originalname));
-    } else {
-      cb(null, Date.now() + path.extname(file.originalname));
-    }
-  }
 });
 
 const upload = multer({ storage: storage });
@@ -90,29 +79,8 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
   if (!req.file) {
     return res.status(400).send('Nenhum arquivo enviado.');
   }
-
-  const type = req.body.type;
-  let folderName = '';
-
-  switch (type) {
-    case 'category':
-      folderName = 'categories';
-      break;
-    case 'brand':
-      folderName = 'brands';
-      break;
-    case 'product':
-      folderName = 'products';
-      break;
-    case 'logo':
-      folderName = 'logo';
-      break;
-    default:
-      return res.status(400).send('Tipo de upload inválido.');
-  }
-
-  const imageUrl = `/img/${folderName}/${req.file.filename}`;
-  res.json({ imageUrl });
+  // A URL da imagem já vem pronta do Cloudinary em req.file.path
+  res.json({ imageUrl: req.file.path });
 });
 
 // Basic route

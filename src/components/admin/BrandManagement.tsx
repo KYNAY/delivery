@@ -29,7 +29,7 @@ export const BrandManagement: React.FC = () => {
           image_url: editingBrand.image_url || ''
         });
         if (editingBrand.image_url) {
-          setImagePreview(`${API_BASE_URL}${editingBrand.image_url}`);
+          setImagePreview(editingBrand.image_url);
         } else {
           setImagePreview(null);
         }

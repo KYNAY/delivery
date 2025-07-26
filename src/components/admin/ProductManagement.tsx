@@ -42,7 +42,7 @@ export const ProductManagement: React.FC = () => {
           is_available: editingProduct.is_available
         });
         if (editingProduct.image_url) {
-          setImagePreview(`${API_BASE_URL}${editingProduct.image_url}`);
+          setImagePreview(editingProduct.image_url);
         } else {
           setImagePreview(null);
         }
